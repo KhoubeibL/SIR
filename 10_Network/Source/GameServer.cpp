@@ -484,3 +484,21 @@ void GameServer::sendToAll(sf::Packet& packet)
 			peer->socket.send(packet);
 	}
 }
+
+
+void GameServer::send(const std::pair<sf::Socket&, zmq::socket_t>, const sf::Packet& packet) {
+	if (mode == 'T') {
+		peer->socket.send(packet);
+	} else if (mode == 'R') {
+		zmq_socket.send(packet);
+	}
+}
+
+sf::Socket::Status GameServer::receive(const sf::Packet& packet) {
+	if (mode == 'T') {
+		return socket.receive(packet);
+	}
+	else if (mode == 'R') {
+		zmq_socket.recv(packet);
+	}
+}

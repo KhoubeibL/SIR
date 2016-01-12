@@ -8,6 +8,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Network/TcpListener.hpp>
 #include <SFML/Network/TcpSocket.hpp>
+#include <SFML/Network/Packet.hpp>
 
 #include <vector>
 #include <memory>
@@ -17,6 +18,10 @@
 class GameServer
 {
 	public:
+		static char							mode;
+		static void							send(const std::pair<sf::Socket&, zmq::socket_t&>, sf::Packet& packet);
+		static sf::Socket::Status			receive(sf::Packet& packet);
+
 		explicit							GameServer(sf::Vector2f battlefieldSize, unsigned short port);
 											~GameServer();
 
